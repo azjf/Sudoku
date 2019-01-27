@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.new_button:
                 openNewGameDialog();
                 break;
+
+            case R.id.exit_button:
+                finish();
+                break;
         }
     }
 
