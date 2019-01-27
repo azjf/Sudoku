@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AboutActivity"
-            android:label="@string/about_title">
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
