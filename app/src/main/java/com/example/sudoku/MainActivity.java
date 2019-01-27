@@ -1,14 +1,21 @@
 package com.example.sudoku;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TableRow;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "Sudoku";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(this, AboutActivity.class);
                 startActivity(i);
                 break;
+
+            case R.id.new_button:
+                openNewGameDialog();
+                break;
         }
     }
 
@@ -52,5 +63,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
         }
         return false;
+    }
+
+
+    private void openNewGameDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.new_game_title)
+                .setItems(R.array.difficulty,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                startGame(i);
+                            }
+                        })
+                .show();
+    }
+
+    private void startGame(int i) {
+        Log.d(TAG, "clicked on " + i);
     }
 }
