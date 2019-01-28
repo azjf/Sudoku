@@ -77,5 +77,27 @@ public class PuzzleView extends View {
             canvas.drawLine(i * width + 1, 0, i * width +1,
                     getHeight(), hilite);
         }
+
+
+        Paint foregroud = new Paint(Paint.ANTI_ALIAS_FLAG);
+        foregroud.setColor(getResources().getColor(
+                R.color.puzzle_foreground
+        ));
+        foregroud.setStyle(Paint.Style.FILL);
+        foregroud.setTextSize(height * 0.75f);
+        foregroud.setTextScaleX(width / height);
+        foregroud.setTextAlign(Paint.Align.CENTER);
+
+        Paint.FontMetrics fm = foregroud.getFontMetrics();
+        float x = width / 2;
+        float y = height / 2 - (fm.ascent + fm.descent) / 2;
+
+        for (int i=0; i<9; i++) {
+            for (int j=0; j<9; j++) {
+                canvas.drawText("6", //this.game.getTileString(i, j),
+                        i * width + x, j * height + y, foregroud);
+            }
+        }
+
     }
 }
