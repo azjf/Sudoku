@@ -1,10 +1,8 @@
 package com.example.sudoku;
 
 import android.app.Activity;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TableRow;
 
 public class Game extends Activity {
     private static final String TAG = "Sudoku";
@@ -15,7 +13,7 @@ public class Game extends Activity {
     public static final int DIFFICULTY_HARD = 2;
 
     private int puzzle[] = new int[9 * 9];
-    //private PuzzleView puzzleView;
+    private PuzzleView puzzleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +24,8 @@ public class Game extends Activity {
         //puzzle = getPuzzle(diff);
         //calculateUsedTiles();
 
-        //puzzleView = new PuzzleView(this);
-        //setContentView(puzzleView);
-        //puzzleView.requestFocus();
+        puzzleView = new PuzzleView(this);
+        setContentView(puzzleView);
+        puzzleView.requestFocus();
     }
 }
