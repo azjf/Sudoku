@@ -28,4 +28,13 @@ public class Game extends Activity {
         setContentView(puzzleView);
         puzzleView.requestFocus();
     }
+
+
+    protected boolean setTileIfValid(int x, int y, int value) {
+        return true;
+    }
+
+    protected void showKeypadOrError(int x, int y) {
+
+    }
 }
