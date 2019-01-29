@@ -32,7 +32,7 @@
 
             <TableRow>
                 <Button
-                    android:id="@+id/contiue_button"
+                    android:id="@+id/continue_button"
                     android:text="@string/continue_label"/>
                 <Button
                     android:id="@+id/new_button"
