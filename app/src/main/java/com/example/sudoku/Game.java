@@ -1,8 +1,11 @@
 package com.example.sudoku;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 public class Game extends Activity {
     private static final String TAG = "Sudoku";
@@ -35,6 +38,30 @@ public class Game extends Activity {
     }
 
     protected void showKeypadOrError(int x, int y) {
+        int tiles[] = {1, 2};//getUsedTiles(x, y);
+        if (tiles.length == 9) {
+            Toast toast = Toast.makeText(this,
+                    R.string.no_moves_label, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+            Log.d(TAG, "showKeypad: used=" + toPuzzleString(tiles));
+            Dialog v = new KeypadActivity(this, tiles, puzzleView);
+            v.show();
+        }
 
+    }
+
+    private final int used[][][] = new int[9][9][];
+    protected int[] getUsedTiles(int x, int y) {
+        return used[x][y];
+    }
+
+    static private String toPuzzleString(int[] puz) {
+        StringBuilder buf = new StringBuilder();
+        for (int element : puz) {
+            buf.append(element);
+        }
+        return buf.toString();
     }
 }
