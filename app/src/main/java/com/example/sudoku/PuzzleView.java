@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 public class PuzzleView extends View {
@@ -31,7 +32,7 @@ public class PuzzleView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         width = w / 9f;
         height = h / 9f;
-        //getRect(selX, selY, selRect);
+        getRect(selX, selY, selRect);
         Log.d(TAG, "onSizeChanged: width " + width + ", height "
                 + height);
 
@@ -99,5 +100,49 @@ public class PuzzleView extends View {
             }
         }
 
+
+        Log.d(TAG, "selRect=" + selRect);
+        Paint selected = new Paint();
+        selected.setColor(getResources().getColor(
+                R.color.puzzle_selected
+        ));
+        canvas.drawRect(selRect, selected);
+    }
+
+
+    private void getRect(int x, int y, Rect rect) {
+        rect.set((int) (x * width), (int) (y * height), (int) (x
+            * width + width), (int) (y * height + height));
+    }
+
+    private void select(int x, int y) {
+        invalidate(selRect);
+        selX = Math.min(Math.max(x, 0), 8);
+        selY = Math.min(Math.max(y, 0), 8);
+        getRect(selX, selY, selRect);
+        invalidate(selRect);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, "onKeyDown: keycode=" + keyCode + ", event=" + event);
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                select(selX, selY - 1);
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                select(selX, selY + 1);
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                select(selX - 1, selY);
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                select(selX + 1, selY);
+                break;
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
+        return true;
     }
 }
