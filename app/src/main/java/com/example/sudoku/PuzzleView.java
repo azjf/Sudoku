@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 public class PuzzleView extends View {
     private static final String TAG = "Sudoku";
@@ -188,6 +189,8 @@ public class PuzzleView extends View {
             invalidate();
         } else {
             Log.d(TAG, "setSelectedTile: invalid: " + tile);
+            startAnimation(AnimationUtils.loadAnimation(game,
+                    R.anim.shake));
         }
     }
 
