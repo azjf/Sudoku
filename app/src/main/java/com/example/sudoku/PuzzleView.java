@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class PuzzleView extends View {
@@ -140,9 +141,45 @@ public class PuzzleView extends View {
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 select(selX + 1, selY);
                 break;
+
+            case KeyEvent.KEYCODE_0:
+            case KeyEvent.KEYCODE_SPACE:    setSelectedTile(0); break;
+            case KeyEvent.KEYCODE_1:    setSelectedTile(1); break;
+            case KeyEvent.KEYCODE_2:    setSelectedTile(2); break;
+            case KeyEvent.KEYCODE_3:    setSelectedTile(3); break;
+            case KeyEvent.KEYCODE_4:    setSelectedTile(4); break;
+            case KeyEvent.KEYCODE_5:    setSelectedTile(5); break;
+            case KeyEvent.KEYCODE_6:    setSelectedTile(6); break;
+            case KeyEvent.KEYCODE_7:    setSelectedTile(7); break;
+            case KeyEvent.KEYCODE_8:    setSelectedTile(8); break;
+            case KeyEvent.KEYCODE_9:    setSelectedTile(9); break;
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                game.showKeypadOrError(selX, selY);
+                break;
+
             default:
                 return super.onKeyDown(keyCode, event);
         }
+        return true;
+    }
+
+    public void setSelectedTile(int tile) {
+        if (game.setTileIfValid(selX, selY, tile)) {
+            invalidate();
+        } else {
+            Log.d(TAG, "setSelectedTile: invalid: " + tile);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN)
+            return super.onTouchEvent(event);
+        select((int) (event.getX() / width),
+                (int) (event.getY() / height));
+        game.showKeypadOrError(selX, selY);
+        Log.d(TAG, "onTouchEvent: x " + selX + ", y " + selY);
         return true;
     }
 }
