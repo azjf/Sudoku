@@ -34,6 +34,15 @@ public class Game extends Activity {
 
 
     protected boolean setTileIfValid(int x, int y, int value) {
+        int tiles[] = getUsedTiles(x, y);
+        if (value != 0) {
+            for (int tile : tiles) {
+                if (tile == value)
+                    return false;
+            }
+        }
+        setTile(x, y, value);
+        calculateUsedTiles();
         return true;
     }
 
@@ -63,5 +72,68 @@ public class Game extends Activity {
             buf.append(element);
         }
         return buf.toString();
+    }
+
+    private void calculateUsedTiles() {
+        for (int x=0; x<9; x++) {
+            for (int y=0; y<9; y++) {
+                used[x][y] = calculateUsedTiles(x, y);
+                //Log.d(TAG, "used[" + x + "][" + y + "] = "
+                //  + toPuzzleString(used[x][y]));
+            }
+        }
+    }
+
+    private int[] calculateUsedTiles(int x, int y) {
+        int c[] = new int[9];
+
+        for (int i=0; i<9; i++) {
+            if (i == y)
+                continue;
+            int t = getTile(x, i);
+            if (t != 0)
+                c[t - 1] = t;
+        }
+
+        for (int i=0; i<9; i++) {
+            if (i == x)
+                continue;
+            int t = getTile(i, y);
+            if (t != 0)
+                c[t - 1] = t;
+        }
+
+        int startx = (x / 3) * 3;
+        int starty = (y / 3) * 3;
+        for (int i = startx; i< startx + 3; i++) {
+            for (int j = starty; j < starty + 3; j++) {
+                if (i == x && j == y)
+                    continue;
+                int t = getTile(i, j);
+                if (t != 0)
+                    c[t - 1] = t;
+            }
+        }
+
+        int nused = 0;
+        for (int t : c) {
+            if (t != 0)
+                nused++;
+        }
+        int c1[] = new int[nused];
+        nused = 0;
+        for (int t : c) {
+            if (t != 0)
+                c1[nused++] = t;
+        }
+        return c1;
+    }
+
+    private int getTile(int x, int y) {
+        return puzzle[y * 9 + x];
+    }
+
+    private void setTile(int x, int y, int value) {
+        puzzle[y * 9 + x] = value;
     }
 }
