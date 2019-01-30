@@ -90,4 +90,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra(Game.KEY_DIFFICULTY, i);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Music.play(this, R.raw.main);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Music.stop(this);
+    }
 }
