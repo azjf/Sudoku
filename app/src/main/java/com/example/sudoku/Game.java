@@ -182,4 +182,16 @@ public class Game extends Activity {
         else
             return String.valueOf(v);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Music.play(this, R.raw.game);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Music.stop(this);
+    }
 }
