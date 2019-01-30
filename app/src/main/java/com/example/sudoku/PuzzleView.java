@@ -97,7 +97,7 @@ public class PuzzleView extends View {
 
         for (int i=0; i<9; i++) {
             for (int j=0; j<9; j++) {
-                canvas.drawText("6", //this.game.getTileString(i, j),
+                canvas.drawText(this.game.getTileString(i, j),
                         i * width + x, j * height + y, foregroud);
             }
         }
@@ -120,7 +120,7 @@ public class PuzzleView extends View {
         Rect r = new Rect();
         for (int i=0; i<9; i++) {
             for (int j=0; j<9; j++) {
-                int movesleft = 1;//9 - game.getUsedTiles(i, j).length;
+                int movesleft = 9 - game.getUsedTiles(i, j).length;
                 if (movesleft < c.length) {
                     getRect(i, j, r);
                     hint.setColor(c[movesleft]);
