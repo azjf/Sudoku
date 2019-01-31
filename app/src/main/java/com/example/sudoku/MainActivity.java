@@ -2,7 +2,6 @@ package com.example.sudoku;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TableRow;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.continue_button:
-                startGame(Game.DIFFICULTY_CONTINUE);
+                startGame(GameActivity.DIFFICULTY_CONTINUE);
                 break;
         }
     }
@@ -90,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startGame(int i) {
         Log.d(TAG, "clicked on " + i);
 
-        Intent intent = new Intent(MainActivity.this, Game.class);
-        intent.putExtra(Game.KEY_DIFFICULTY, i);
+        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra(GameActivity.KEY_DIFFICULTY, i);
         startActivity(intent);
     }
 

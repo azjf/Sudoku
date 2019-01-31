@@ -24,7 +24,7 @@
             android:label="@string/about_title"
             android:theme="@android:style/Theme.Dialog"/>
         <activity
-            android:name=".Game"
+            android:name=".GameActivity"
             android:label="@string/game_title" />
     </application>
 

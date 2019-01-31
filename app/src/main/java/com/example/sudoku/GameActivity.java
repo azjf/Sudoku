@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class Game extends Activity {
+public class GameActivity extends Activity {
     private static final String TAG = "Sudoku";
 
     public static final String KEY_DIFFICULTY = "difficulty";
@@ -221,7 +221,7 @@ public class Game extends Activity {
 
         Music.stop(this);
         getPreferences(MODE_PRIVATE).edit().putString(PREF_PUZZLE,
-                toPuzzleString(puzzle)).commit();
+                toPuzzleString(puzzle)).apply();
         getPreferences(MODE_PRIVATE).edit().putString(PREF_ORIG_DIFFICULTY,
                 String.valueOf(origDiff)).apply();
     }
