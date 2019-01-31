@@ -5,24 +5,21 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.VideoView;
 
 public class PuzzleView extends View {
     private static final String TAG = "Sudoku";
-    private final Game game;
+    private final GameActivity gameActivity;
 
     public PuzzleView(Context context) {
         super(context);
 
-        this.game = (Game) context;
+        this.gameActivity = (GameActivity) context;
         setFocusable(true);
         setFocusableInTouchMode(true);
 
@@ -103,11 +100,11 @@ public class PuzzleView extends View {
 
         for (int i=0; i<9; i++) {
             for (int j=0; j<9; j++) {
-                if (game.isOrigTile(i, j))
+                if (gameActivity.isOrigTile(i, j))
                     foregroud.setColor(colorOrig);
                 else
                     foregroud.setColor(color);
-                canvas.drawText(this.game.getTileString(i, j),
+                canvas.drawText(gameActivity.getTileString(i, j),
                         i * width + x, j * height + y, foregroud);
             }
         }
@@ -131,7 +128,7 @@ public class PuzzleView extends View {
             Rect r = new Rect();
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    int movesleft = 9 - game.getUsedTiles(i, j).length;
+                    int movesleft = 9 - gameActivity.getUsedTiles(i, j).length;
                     if (movesleft < c.length) {
                         getRect(i, j, r);
                         hint.setColor(c[movesleft]);
@@ -187,7 +184,7 @@ public class PuzzleView extends View {
             case KeyEvent.KEYCODE_9:    setSelectedTile(9); break;
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_DPAD_CENTER:
-                game.showKeypadOrError(selX, selY);
+                gameActivity.showKeypadOrError(selX, selY);
                 break;
 
             default:
@@ -197,11 +194,11 @@ public class PuzzleView extends View {
     }
 
     public void setSelectedTile(int tile) {
-        if (game.setTileIfValid(selX, selY, tile)) {
+        if (gameActivity.setTileIfValid(selX, selY, tile)) {
             invalidate();
         } else {
             Log.d(TAG, "setSelectedTile: invalid: " + tile);
-            startAnimation(AnimationUtils.loadAnimation(game,
+            startAnimation(AnimationUtils.loadAnimation(gameActivity,
                     R.anim.shake));
         }
     }
@@ -212,7 +209,7 @@ public class PuzzleView extends View {
             return super.onTouchEvent(event);
         select((int) (event.getX() / width),
                 (int) (event.getY() / height));
-        game.showKeypadOrError(selX, selY);
+        gameActivity.showKeypadOrError(selX, selY);
         Log.d(TAG, "onTouchEvent: x " + selX + ", y " + selY);
         return true;
     }
