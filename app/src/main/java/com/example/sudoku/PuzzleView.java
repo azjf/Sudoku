@@ -36,6 +36,7 @@ public class PuzzleView extends View {
     private int selY;
     private final Rect selRect = new Rect();
 
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         width = w / 9f;
@@ -89,9 +90,8 @@ public class PuzzleView extends View {
 
 
         Paint foregroud = new Paint(Paint.ANTI_ALIAS_FLAG);
-        foregroud.setColor(getResources().getColor(
-                R.color.puzzle_foreground
-        ));
+        int color = getResources().getColor(R.color.puzzle_foreground);
+        int colorOrig = getResources().getColor(R.color.puzzle_foreground_orig);
         foregroud.setStyle(Paint.Style.FILL);
         foregroud.setTextSize(height * 0.75f);
         foregroud.setTextScaleX(width / height);
@@ -103,6 +103,10 @@ public class PuzzleView extends View {
 
         for (int i=0; i<9; i++) {
             for (int j=0; j<9; j++) {
+                if (isOrigTile(i, j))
+                    foregroud.setColor(colorOrig);
+                else
+                    foregroud.setColor(color);
                 canvas.drawText(this.game.getTileString(i, j),
                         i * width + x, j * height + y, foregroud);
             }
@@ -239,5 +243,12 @@ public class PuzzleView extends View {
 
         super.onRestoreInstanceState(bundle.getParcelable(VIEW_STATE));
         return;
+    }
+
+    private boolean isOrigTile(int x, int y) {
+        if (game.puzzleOrig[y * 9 + x] != 0)
+            return true;
+        else
+            return false;
     }
 }

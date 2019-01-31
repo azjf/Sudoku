@@ -17,6 +17,7 @@ public class Game extends Activity {
     public static final int DIFFICULTY_HARD = 2;
 
     private int puzzle[] = new int[9 * 9];
+    public int puzzleOrig[] = new int[9 * 9];
     private PuzzleView puzzleView;
 
     private final String easyPuzzle =
@@ -33,7 +34,9 @@ public class Game extends Activity {
                     "000720903090301080000000600";
 
     private static final String PREF_PUZZLE = "puzzle";
+    private static final String PREF_ORIG_DIFFICULTY = "puzzle_orig_difficulty";
     protected static final int DIFFICULTY_CONTINUE = -1;
+    private int origDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,17 @@ public class Game extends Activity {
 
         int diff = getIntent().getIntExtra(KEY_DIFFICULTY, DIFFICULTY_EASY);
         puzzle = getPuzzle(diff);
+        origDiff = Integer.valueOf(
+                getPreferences(MODE_PRIVATE).getString(PREF_ORIG_DIFFICULTY, "-2")
+        );
+        //first time
+        if (origDiff == -2) origDiff = diff;
+        //new game
+        if (diff != DIFFICULTY_CONTINUE) origDiff = diff;
+        Log.d(TAG, "diff: " + diff + ", origDiff: " + origDiff);
+
+        puzzle = getPuzzle(diff);
+        puzzleOrig = getPuzzle(origDiff);
         calculateUsedTiles();
 
         puzzleView = new PuzzleView(this);
@@ -206,5 +220,8 @@ public class Game extends Activity {
         Music.stop(this);
         getPreferences(MODE_PRIVATE).edit().putString(PREF_PUZZLE,
                 toPuzzleString(puzzle)).commit();
+        getPreferences(MODE_PRIVATE).edit().putString(PREF_ORIG_DIFFICULTY,
+                String.valueOf(origDiff)).apply();
+
     }
 }
