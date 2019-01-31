@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.exit_button:
                 finish();
                 break;
+
+            case R.id.continue_button:
+                startGame(Game.DIFFICULTY_CONTINUE);
+                break;
         }
     }
 
