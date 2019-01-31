@@ -80,6 +80,9 @@ public class Game extends Activity {
     }
 
     protected void showKeypadOrError(int x, int y) {
+        if (isOrigTile(x, y))
+            return;
+
         int tiles[] = getUsedTiles(x, y);
         if (tiles.length == 9) {
             Toast toast = Toast.makeText(this,
@@ -91,7 +94,6 @@ public class Game extends Activity {
             Dialog v = new KeypadActivity(this, tiles, puzzleView);
             v.show();
         }
-
     }
 
     private final int used[][][] = new int[9][9][];
@@ -222,6 +224,13 @@ public class Game extends Activity {
                 toPuzzleString(puzzle)).commit();
         getPreferences(MODE_PRIVATE).edit().putString(PREF_ORIG_DIFFICULTY,
                 String.valueOf(origDiff)).apply();
+    }
 
+
+    public boolean isOrigTile(int x, int y) {
+        if (puzzleOrig[y * 9 + x] != 0)
+            return true;
+        else
+            return false;
     }
 }
