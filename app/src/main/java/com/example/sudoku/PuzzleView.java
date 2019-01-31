@@ -103,7 +103,7 @@ public class PuzzleView extends View {
 
         for (int i=0; i<9; i++) {
             for (int j=0; j<9; j++) {
-                if (isOrigTile(i, j))
+                if (game.isOrigTile(i, j))
                     foregroud.setColor(colorOrig);
                 else
                     foregroud.setColor(color);
@@ -243,12 +243,5 @@ public class PuzzleView extends View {
 
         super.onRestoreInstanceState(bundle.getParcelable(VIEW_STATE));
         return;
-    }
-
-    private boolean isOrigTile(int x, int y) {
-        if (game.puzzleOrig[y * 9 + x] != 0)
-            return true;
-        else
-            return false;
     }
 }
