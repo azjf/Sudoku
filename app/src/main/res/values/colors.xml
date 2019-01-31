@@ -11,6 +11,7 @@
     <color name="puzzle_light">#64C6D4EF</color>
     <color name="puzzle_dark">#6456648F</color>
     <color name="puzzle_foreground">#FF000000</color>
+    <color name="puzzle_foreground_orig">#FF0000FF</color>
     <color name="puzzle_hint_0">#64FF0000</color>
     <color name="puzzle_hint_1">#6400FF80</color>
     <color name="puzzle_hint_2">#2000FF80</color>
