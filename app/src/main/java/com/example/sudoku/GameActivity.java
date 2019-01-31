@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class GameActivity extends Activity {
+public class GameActivity extends AppCompatActivity {
     private static final String TAG = "Sudoku";
 
     public static final String KEY_DIFFICULTY = "difficulty";
